@@ -1,0 +1,21 @@
+version: '2'
+services:
+  db:
+    image: web-api1-db
+    container_name: web-api1-db
+    build: db
+    environment:
+      MYSQL_ROOT_PASSWORD: todo-password
+      TZ: "UTC"
+    ports:
+      - "127.0.0.1:3306:3306"
+  api-server:
+    image: web-api1-server
+    container_name: web-api1-server
+    build:
+      context: ../
+      dockerfile: ./build/web-api1/Dockerfile
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      - db
